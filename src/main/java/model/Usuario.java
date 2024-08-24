@@ -1,64 +1,41 @@
 package model;
 
 public class Usuario {
-    private int id;
-    private String nome;
-    private String usuario;
-    private String senha;
+	private int id;
+	private String nome;
+	private String senha;
+	
+	public Usuario(int id, String nome, String senha) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.senha = senha;
+	}
 
-    // Construtor padrão
-    public Usuario() {
-    }
+	public int getId() {
+		return id;
+	}
 
-    // Construtor com parâmetros
-    public Usuario(int id, String nome, String usuario, String senha) {
-        this.id = id;
-        this.nome = nome;
-        this.usuario = usuario;
-        this.senha = senha;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    // Getters e Setters
-    public int getId() {
-        return id;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    // Método toString
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", usuario='" + usuario + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
-    }
 }

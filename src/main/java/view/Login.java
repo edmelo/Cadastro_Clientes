@@ -1,68 +1,114 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import controller.Criptografia;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
-    public Login() {
-        // Configurações do JFrame
-        setTitle("Login");
-        setSize(300, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+	private JPanel contentPane;
+	private JTextField textFieldUsuario;
+	private JPasswordField passwordField;
 
-        // Configuração do layout
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(3, 3, 3, 3);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login frame = new Login();
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
-        // Label BEM VINDO
-        JLabel welcomeLabel = new JLabel("BEM VINDO", SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        add(welcomeLabel, gbc);
+	/**
+	 * Create the frame.
+	 */
+	public Login() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 519, 315);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(49, 62, 64));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        // Label Usuario
-        JLabel userLabel = new JLabel("Usuario:");
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        add(userLabel, gbc);
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(136, 24, 251, 227);
+		panel.setBackground(new Color(204,207,208));
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Usuário");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel.setBounds(42, 54, 46, 14);
+		panel.add(lblNewLabel);
+		
+		textFieldUsuario = new JTextField();
+		textFieldUsuario.setBounds(42, 67, 160, 20);
+		panel.add(textFieldUsuario);
+		textFieldUsuario.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Senha");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_1.setBounds(42, 118, 46, 14);
+		panel.add(lblNewLabel_1);
+		
+		JButton btnNewButton = new JButton("Entrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Criptografia criptografia =  new Criptografia(passwordField.getText(), Criptografia.MD5);
+				System.out.println(criptografia.criptografar());
+				if(textFieldUsuario.getText()!=null && 
+						!textFieldUsuario.getText().isEmpty() &&
+						passwordField.getText()!=null &&
+						!passwordField.getText().isEmpty()) {
+					if(criptografia.criptografar().equals("E10ADC3949BA59ABBE56E057F20F883E")) {
+					JOptionPane.showMessageDialog(btnNewButton, "Informações válidas");
+					dispose();
+					TelaPrincipal jPrincipal = new TelaPrincipal();
+					jPrincipal.setLocationRelativeTo(jPrincipal);
+					jPrincipal.setVisible(true);
+					}
+					
+				}else {
+					JOptionPane.showMessageDialog(btnNewButton, "Verifique as informações", "Aviso", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(49, 62, 64));
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBounds(79, 182, 89, 23);
+		panel.add(btnNewButton);
+		
+		JLabel lblNewLabel_2 = new JLabel("Bem vindo");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel_2.setBounds(74, 11, 99, 14);
+		panel.add(lblNewLabel_2);
 
-        // Campo de texto Usuario
-        JTextField userTextField = new JTextField(15);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        add(userTextField, gbc);
-
-        // Label Senha
-        JLabel passwordLabel = new JLabel("Senha:");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(passwordLabel, gbc);
-
-        // Campo de texto Senha
-        JPasswordField passwordField = new JPasswordField(15);
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        add(passwordField, gbc);
-
-        // Botão Login
-        JButton loginButton = new JButton("Entrar");
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
-        add(loginButton, gbc);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Login loginScreen = new Login();
-            loginScreen.setVisible(true);
-        });
-    }
+		passwordField = new JPasswordField();
+		passwordField.setBounds(42, 132, 160, 23);
+		panel.add(passwordField);
+	}
 }
